@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <title>CSS Modifier</title>
+</head>
+
+<body id="backgroundMod">
+  <nav id="navHead" class="nav justify-content-around align-items-center p-4 bg-light">
+    <h4 class="">CSS Modifier</h4>
+    <div class="nav text-light ">
+      <li id="hexSelect" class="nav-link text-light bg-dark" onclick="modifyTypeHex()">Hex</li>
+      <li id="nameSelect" class="nav-link text-light bg-dark" onclick="modifyTypeName()">Color name</li>
+    </div>
+  </nav>
+
+  <main class="mainBox d-flex justify-content-center align-items-center">
+    <div
+      class="modifierContainer d-flex justify-content-center align-items-start flex-column gap-5 rounded bg-dark p-5">
+      <div class="w-100 d-flex justify-content-around align-items-center gap-5">
+        <h1>Background Color: <span id="nameBgColor"></span></h1>
+        <button class="btn" onclick="modifyColor()">Modify</button>
+      </div>
+      <div class="w-100 d-flex justify-content-between align-items-center">
+        <h1>Text Font : <span id="nameFont"></span></h1>
+        <button class="btn" onclick="modifyFont()">Modify</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const hexRef = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+
+    const colorsNames = ["red", "blue", "green", "yellow",
+      "orange", "purple", "pink", "brown",
+      "gray", "black", "white", "cyan", "magenta",
+      "lime", "silver", "olive", "maroon",
+      "navy", "teal", "aqua", "fuchsia", "indigo",
+      "violet", "gold", "sienna", "tan", "peru",
+      "rosybrown", "darkorange", "cadetblue",
+      "burlywood", "chocolate", "cornflowerblue",
+      "crimson", "darkcyan", "darkgoldenrod",
+      "darkmagenta", "darkolivegreen", "darkorchid",
+      "darksalmon", "darkseagreen", "darkslategray",
+      "darkturquoise", "darkviolet", "deeppink",
+      "deepskyblue", "dodgerblue", "firebrick",
+      "forestgreen", "hotpink", "indianred",
+      "lightcoral", "lightseagreen", "lightskyblue",
+      "lightsteelblue", "mediumseagreen", "mediumslateblue",
+      "mediumspringgreen", "mediumturquoise",
+      "mediumvioletred", "midnightblue", "orangered",
+      "orangered", "orchid", "palevioletred", "seashell",
+      "sienna", "skyblue", "slateblue", "springgreen",
+      "steelblue", "tomato", "wheat", "whitesmoke", "yellowgreen"];
+
+    const textFonts = ["Arial",
+      "Times New Roman",
+      "Georgia",
+      "Segoe UI",
+      "Courier New",
+      "Lucida Console",
+      "Trebuchet MS",
+      "Verdana",
+      "Comic Sans MS",
+      "Brush Script MT"];
+
+    let backColor = document.body.style.backgroundColor = "#0088FF";
+    let actualBgColor = document.getElementById("nameBgColor")
+    actualBgColor.textContent = backColor;
+
+    let bodyFont = document.body.style.fontFamily = "Segoe UI"
+    let actualFont = document.getElementById("nameFont")
+    actualFont.textContent = bodyFont;
+
+    let typeColor = false
+
+    function modifyTypeName() {
+      typeColor = true;
+      document.body.style.backgroundColor = "crimson"
+      document.getElementById("nameSelect").style.border = "2px solid red"
+      document.getElementById("hexSelect").style.border = "0"
+    }
+
+    function modifyTypeHex() {
+      typeColor = false;
+      document.body.style.backgroundColor = generateHex();
+      document.getElementById("nameSelect").style.border = "0"
+      document.getElementById("hexSelect").style.border = "2px solid red"
+    }
+
+    function generateHex() {
+      let colorHex = ["#"]
+      for (let i = 0; i < 6; i++) {
+        colorHex.push(hexRef[Math.floor(Math.random() * 16)])
+      }
+      return (colorHex.join(""))
+    }
+
+    function randomSelector(arraySel) {
+      let randomVal = Math.floor(Math.random() * arraySel.length)
+      return randomVal
+    }
+
+    function modifyFont() {
+      let randomFontInt = randomSelector(textFonts)
+      while (textFonts[randomFontInt] == actualFont) {
+        randomFontInt = randomSelector(textFonts)
+      }
+      bodyFont = document.body.style.fontFamily = textFonts[randomFontInt];
+      actualFont.textContent = bodyFont;
+    }
+
+    function modifyColor() {
+      let randomColorInt
+      if (!typeColor) {
+        backColor = document.body.style.backgroundColor = generateHex();
+      } else {
+        randomColorInt = randomSelector(colorsNames)
+        while (textFonts[randomColorInt] == actualBgColor) {
+          randomColorInt = randomSelector(colorsNames)
+        }
+        backColor = document.body.style.backgroundColor = colorsNames[randomColorInt];
+      }
+      actualBgColor.textContent = backColor;
+    }
+
+  </script>
+</body>
+
+</html>
